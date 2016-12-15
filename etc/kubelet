@@ -1,0 +1,8 @@
+# The address for the info server to serve on
+KUBELET_ADDRESS="--address=0.0.0.0"
+
+# The port for the info server to serve on
+KUBELET_PORT="--port=10250"
+
+# Location of the api-server
+KUBELET_API_SERVER="--api-servers=http://kube-1-master:8080"
