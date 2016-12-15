@@ -10,7 +10,7 @@ def configure_cluster(machine_count, master_config)
 end
 
 def configure_host(machine_id, master_config)
-  kube_type = machine_id == 1 ? "master" : "minion"
+  kube_type = machine_id == 1 ? "master" : "node"
   hostname = "kube-#{machine_id}-#{kube_type}"
   fqdn = "#{hostname}.example.com"
   ip_address = "192.168.66.#{machine_id + 1}"

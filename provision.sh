@@ -1,5 +1,4 @@
 kubetype=$1
-machineid=$2
 
 echo "Configuring kube type: $kubetype, machine_id: $machine_id"
 
@@ -49,11 +48,10 @@ if [[ $kubetype == "master" ]]; then
   done
 else
   # Configure the services on the nodes
-  echo "Setting up minion specific config..."
+  echo "Setting up node specific config..."
   cp /vagrant/etc/kubelet /etc/kubernetes
 
   # Hostname
-  #echo "KUBELET_HOSTNAME=\"--hostname-override=kube-${machineid}-minion\"" >> \
   echo 'KUBELET_HOSTNAME=""' >> /etc/kubernetes/kubelet
 
   for SERVICES in kube-proxy kubelet flanneld docker; do
