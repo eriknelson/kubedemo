@@ -16,6 +16,9 @@ cp /vagrant/etc/flanneld /etc/sysconfig/flanneld
 systemctl disable firewalld
 systemctl stop firewalld
 
+# Disable selinux
+setenforce 0
+
 # Kube type specific configs
 if [[ $kubetype == "master" ]]; then
   echo "Setting up master specific config..."
