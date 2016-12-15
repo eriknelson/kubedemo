@@ -20,7 +20,7 @@ systemctl stop firewalld
 if [[ $kubetype == "master" ]]; then
   echo "Setting up master specific config..."
   cp /vagrant/etc/etcd.conf /etc/etcd
-  cp /vagrant/etc/kubernetes.apiservice /etc/kubernetes/apiservice
+  cp /vagrant/etc/kubernetes.apiserver /etc/kubernetes/apiserver
 
   systemctl restart etcd
   systemctl enable etcd
@@ -50,8 +50,8 @@ else
   cp /vagrant/etc/kubelet /etc/kubernetes
 
   # Hostname
-  echo "\nKUBELET_HOSTNAME=\"--hostname-override=kube-${machineid}-minion\"" >> \
-    /etc/kubernetes/kubelet
+  #echo "KUBELET_HOSTNAME=\"--hostname-override=kube-${machineid}-minion\"" >> \
+  echo 'KUBELET_HOSTNAME=""' >> /etc/kubernetes/kubelet
 
   for SERVICES in kube-proxy kubelet flanneld docker; do
     systemctl restart $SERVICES
