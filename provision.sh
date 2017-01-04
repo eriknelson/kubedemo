@@ -5,7 +5,7 @@ echo "Configuring kube type: $kubetype, machine_id: $machine_id"
 echo "Setting up cloud repo..."
 cp /vagrant/etc/virt7-docker-common-release.repo /etc/yum.repos.d
 yum -y install --enablerepo=virt7-docker-common-release kubernetes etcd flannel
-yum -y install vim net-tools
+yum -y install vim net-tools bind-utils
 
 # Copy over shared config
 cp /vagrant/etc/kubernetes.config /etc/kubernetes/config
