@@ -3,7 +3,8 @@
 
 VM_MEM = 4096
 VM_CPU = 2
-CLUSTER_SIZE = 4
+CLUSTER_SIZE = 2
+KUBERNETES_VERSION = 'v1.7.4'
 
 def configure_cluster(machine_count, master_config)
   machine_count.times { |i| configure_host(i + 1, master_config) }
@@ -18,12 +19,6 @@ def configure_host(machine_id, master_config)
   master_config.vm.define(hostname) do |config|
     config.vm.hostname = fqdn
 
-    config.landrush.enabled = true
-    config.landrush.host_ip_address = ip_address
-    config.landrush.tld = fqdn
-    config.landrush.host ".#{fqdn}", ip_address
-    config.landrush.guest_redirect_dns = false
-
     config.vm.provider "libvirt" do |v, override|
       v.memory = VM_MEM
       v.cpus = VM_CPU
@@ -32,11 +27,20 @@ def configure_host(machine_id, master_config)
       override.vm.box = "centos/7"
     end
 
-    config.vm.network :private_network, :ip => ip_address
+    config.vm.network :private_network, ip: ip_address
 
     config.vm.provision :shell,
       :path => "provision.sh",
-      :args => [kube_type, machine_id]
+      :args => [kube_type, machine_id, KUBERNETES_VERSION]
+
+    config.vm.provision "shell" do |s|
+      ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+      s.inline = <<-SHELL
+        echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+        mkdir /root/.ssh
+        echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
+      SHELL
+    end
   end
 end
 

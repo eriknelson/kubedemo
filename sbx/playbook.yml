@@ -1,0 +1,15 @@
+---
+- name: do a thing
+  hosts: all
+  tasks:
+    - name: Trying to download shit
+      uri:
+        url: "http://kube-1-master/token"
+        method: GET
+        return_content: yes
+      register: response
+      until: response != None
+      retries: 5
+      delay: 10
+    - debug:
+        msg: "response: {{ response }}"
