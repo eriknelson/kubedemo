@@ -1,0 +1,16 @@
+---
+- name: Trying to fetch token from master
+  uri:
+    url: "http://kube-1-master/token"
+    method: GET
+    return_content: yes
+  register: token_response
+  until: token_response != None and token_response['status'] == 200
+  retries: 60
+  delay: 10
+
+- set_fact: kubeadm_token={{ token_response['content'] }}
+  when: kubeadm_token is not defined
+
+- name: Join cluster
+  command: /usr/bin/kubeadm join kube-1-master:6443 --token {{ kubeadm_token }}

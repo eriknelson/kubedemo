@@ -1,1 +1,3 @@
 .vagrant
+*.retry
+kube-1-master.conf
