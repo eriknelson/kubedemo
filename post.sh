@@ -5,4 +5,5 @@ output=$(vagrant ssh kube-1-master -c "cat /etc/kubernetes/admin.conf")
 echo "${output}" > kube-1-master.conf
 
 echo "alias kk=\"/usr/bin/kubectl --kubeconfig ${_dir}/kube-1-master.conf\"" > kk.source
+echo "alias kkp=\"KUBECONFIG=${_dir}/kube-1-master.conf kubectl get pods --all-namespaces\"" >> kk.source
 echo "alias helm=\"KUBECONFIG=${_dir}/kube-1-master.conf helm\"" >> kk.source

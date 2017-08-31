@@ -1,2 +1,3 @@
 alias kk="/usr/bin/kubectl --kubeconfig /home/ernelson/cluster/kubedemo/kube-1-master.conf"
+alias kkp="KUBECONFIG=/home/ernelson/cluster/kubedemo/kube-1-master.conf kubectl get pods --all-namespaces"
 alias helm="KUBECONFIG=/home/ernelson/cluster/kubedemo/kube-1-master.conf helm"
