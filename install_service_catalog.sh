@@ -21,12 +21,13 @@ echo "SC_SERVICE_CERT: ${SC_SERVING_CERT}"
 echo "SC_SERVICE_KEY: ${SC_SERVING_KEY}"
 
 KUBECONFIG=${_dir}/kube-1-master.conf helm install ../../charts/catalog \
-    --name ${HELM_RELEASE_NAME} --namespace ${SVCCAT_NAMESPACE} \
-    --set apiserver.auth.enabled=true \
-        --set useAggregator=true \
-        --set apiserver.tls.ca=$(base64 --wrap 0 ${SC_SERVING_CA}) \
-        --set apiserver.tls.cert=$(base64 --wrap 0 ${SC_SERVING_CERT}) \
-        --set apiserver.tls.key=$(base64 --wrap 0 ${SC_SERVING_KEY})
+  --name ${HELM_RELEASE_NAME} \
+  --namespace ${SVCCAT_NAMESPACE} \
+  --set apiserver.auth.enabled=true \
+  --set useAggregator=true \
+  --set apiserver.tls.ca=$(base64 --wrap 0 ${SC_SERVING_CA}) \
+  --set apiserver.tls.cert=$(base64 --wrap 0 ${SC_SERVING_CERT}) \
+  --set apiserver.tls.key=$(base64 --wrap 0 ${SC_SERVING_KEY})
 
 echo "Deployment complete."
 popd

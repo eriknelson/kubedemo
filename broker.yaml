@@ -1,10 +1,6 @@
 apiVersion: servicecatalog.k8s.io/v1alpha1
 kind: ServiceBroker
 metadata:
-  name: ansible-service-broker
+  name: ansible-service-broker-do
 spec:
-  url: https://asb-1338-ansible-service-broker.172.18.0.1.nip.io
-  authInfo:
-    basicAuthSecret:
-      namespace: ansible-service-broker
-      name: asb-auth-secret
+  url: http://192.168.66.1:1338

@@ -51,6 +51,10 @@
 - name: Enable and start httpd
   systemd: state=started enabled=yes name=httpd
 
+- name: Set docker network options
+  command: echo 'DOCKER_NETWORK_OPTIONS=\"--bip=172.18.0.1/16\"' > /etc/sysconfig/docker-network
+  become: true
+
 - name: Enable and start docker
   systemd: state=started enabled=yes name=docker
 
