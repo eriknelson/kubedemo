@@ -1,7 +1,7 @@
 #!/bin/bash
 _dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 prefix="docker.io/eriknelson"
-tag="canary"
+tag="relist"
 remote_apiserver=${prefix}/apiserver:${tag}
 remote_controller_manager=${prefix}/controller-manager:${tag}
 pushd $HOME/cluster/src/github.com/kubernetes-incubator/service-catalog

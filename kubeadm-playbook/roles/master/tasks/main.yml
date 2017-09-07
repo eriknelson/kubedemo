@@ -29,13 +29,19 @@
 - name: Initialize cluster
   command: /usr/bin/kubeadm init --token {{ kubeadm_token }} --apiserver-advertise-address=192.168.66.2 --pod-network-cidr=10.244.0.0/16
 
-- name: Apply flannel network plugin files
-  command: /usr/bin/kubectl apply -f {{ item }}
+#- name: Get dynamic kubeversion
+  #command: "/vagrant/internal_cluster/_encode_kube_version.sh"
+  #register: kube_version
+
+- name: Apply flannel one
+  command: "/usr/bin/kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
   environment:
     KUBECONFIG: /etc/kubernetes/admin.conf
-  with_items:
-    - "https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
-    - "https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml"
+
+- name: Apply flannel two
+  command: "/usr/bin/kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml"
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
 
 - name: Wait 1 minute for images pulls and cluster services to start
   pause: minutes=1

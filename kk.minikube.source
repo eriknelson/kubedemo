@@ -1,0 +1,4 @@
+alias kk="/usr/bin/kubectl"
+alias kkp="/usr/bin/kubectl get pods --all-namespaces"
+alias helm="/usr/bin/helm"
+source <(kk completion zsh)

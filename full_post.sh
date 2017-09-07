@@ -5,6 +5,7 @@ ${_dir}/post.sh
 ${_dir}/install_tiller.sh # helm init -- installs *unpermissioned* tiller pod
 ${_dir}/permission_tiller.sh # Sets up appropriate roles for tiller
 ${_dir}/permission_sc_sas.sh # sets up rolebindings for the catalog
+source ${_dir}/kk.source # sets up rolebindings for the catalog
 
 ## Need to wait for tiller to come up for this
 # helm install of the catalog. Also importantly generates certs and mounts
