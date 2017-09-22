@@ -1,3 +1,4 @@
+export KUBECONFIG=/home/ernelson/cluster/kubedemo/minikube.conf
 alias kk="/usr/bin/kubectl"
 alias kkp="/usr/bin/kubectl get pods --all-namespaces"
 alias helm="/usr/bin/helm"
