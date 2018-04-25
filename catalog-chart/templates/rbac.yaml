@@ -17,6 +17,12 @@ items:
   - apiGroups: [""]
     resources: ["namespaces"]
     verbs:     ["get", "list", "watch"]
+  - apiGroups: ["admissionregistration.k8s.io"]
+    resources: ["validatingwebhookconfigurations"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["admissionregistration.k8s.io"]
+    resources: ["mutatingwebhookconfigurations"]
+    verbs: ["get", "list", "watch"]
 # API-server service-account gets its own role
 - apiVersion: {{template "rbacApiVersion" . }}
   kind: ClusterRoleBinding
@@ -115,6 +121,32 @@ items:
     name: "{{ .Values.controllerManager.serviceAccount }}"
     namespace: "{{ .Release.Namespace }}"
 
+# This gives create/update access to configmaps
+- apiVersion: {{template "rbacApiVersion" . }}
+  kind: Role
+  metadata:
+    name: "servicecatalog.k8s.io:cluster-info-configmap"
+    namespace: default
+  rules:
+  - apiGroups:     [""]
+    resources:     ["configmaps"]
+    resourceNames: ["cluster-info"]
+    verbs:         ["get","create","list","watch","update"]
+- apiVersion: {{template "rbacApiVersion" . }}
+  kind: RoleBinding
+  metadata:
+    name: service-catalog-controller-manager-cluster-info
+    namespace: "{{ .Release.Namespace }}"
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: "servicecatalog.k8s.io:cluster-info-configmap"
+  subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: "{{ .Values.controllerManager.serviceAccount }}"
+    namespace: "{{ .Release.Namespace }}"
+
 # This gives create/update access to configmaps in deployment namespace for leader election
 - apiVersion: {{template "rbacApiVersion" . }}
   kind: Role
@@ -132,7 +164,7 @@ items:
 - apiVersion: {{template "rbacApiVersion" . }}
   kind: RoleBinding
   metadata:
-    name: service-catalog-controller-manager
+    name: service-catalog-controller-manager-leader-election
     namespace: "{{ .Release.Namespace }}"
   roleRef:
     apiGroup: rbac.authorization.k8s.io
