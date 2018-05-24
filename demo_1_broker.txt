@@ -1,0 +1,6 @@
+* Start dind cluster
+* setup_tiller
+* install_service_catalog
+* install_ups
+* install_broker
+* post_broker_install
