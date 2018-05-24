@@ -8,6 +8,3 @@ echo "Purging broker"
 pushd $BROKER_DIR
 make undeploy
 popd
-
-kubectl delete ns privileged
-kubectl delete ns bob-dev

@@ -8,6 +8,3 @@ echo "Installing k8s deployment of ASB"
 pushd $BROKER_DIR
 make deploy
 popd
-
-kubectl create ns privileged
-kubectl create ns bob-dev
