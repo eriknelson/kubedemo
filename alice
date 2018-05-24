@@ -1,0 +1,26 @@
+#!/bin/bash
+_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+debug="true"
+echo "Switching to alice's context"
+secret=$(kubectl get sa alice -n privileged -o json | jq -r .secrets[].name)
+[[ "$debug" == "true" ]] && echo "secret: $secret" && echo ""
+kubectl get secret -n privileged $secret -o json | jq -r '.data["ca.crt"]' | base64 -d > ./democa.crt
+[[ "$debug" == "true" ]] && echo "demo_ca: $(cat ./democa.crt)" && echo ""
+user_token=$(kubectl get secret -n privileged $secret -o json | jq -r '.data["token"]' | base64 -d)
+[[ "$debug" == "true" ]] && echo "user_token: $user_token" && echo ""
+c=`kubectl config current-context`
+name=`kubectl config get-contexts $c | awk '{print $3}' | tail -n 1`
+endpoint=`kubectl config view -o jsonpath="{.clusters[?(@.name == \"$name\")].cluster.server}"`
+[[ "$debug" == "true" ]] && echo "endpoint: $endpoint" && echo ""
+
+kubectl config set-cluster demo-cluster \
+  --embed-certs=true \
+  --server=$endpoint \
+  --certificate-authority=./democa.crt
+
+kubectl config set-credentials alice --token=$user_token
+kubectl config set-context alice \
+  --cluster=demo-cluster \
+  --user=alice \
+  --namespace=privileged
+kubectl config use-context alice

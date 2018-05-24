@@ -2,3 +2,5 @@
 *.retry
 kube-1-master.conf
 req-header-mk
+democa.crt
+demo-setup.yaml
