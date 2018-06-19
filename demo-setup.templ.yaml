@@ -1,28 +1,8 @@
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: alice
-  namespace: privileged
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: alice
-  namespace: privileged
-subjects:
-- kind: ServiceAccount
-  name: alice
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: admin
----
 apiVersion: servicecatalog.k8s.io/v1beta1
 kind: ServiceBroker
 metadata:
   name: privileged-automation-broker
-  namespace: privileged
+  namespace: foo
 spec:
   url: "https://automation-broker.automation-broker.svc:1338/automation-broker/"
   authInfo:
