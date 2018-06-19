@@ -9,6 +9,6 @@ spec:
     bearer:
       secretRef:
         kind: Secret
-        namespace: automation-broker
+        namespace: foo
         name: %%CLIENT_TOKEN_NAME%%
   caBundle: %%BROKER_CA_CERT%%
