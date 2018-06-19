@@ -1,7 +1,6 @@
 # Default values for Service Catalog
 # service-catalog image to use
-image: quay.io/kubernetes-service-catalog/service-catalog:v0.1.20
-#image: docker.io/eriknelson/service-catalog:ns
+image: quay.io/kubernetes-service-catalog/service-catalog:v0.1.21
 # imagePullPolicy for the service-catalog; valid values are "IfNotPresent",
 # "Never", and "Always"
 imagePullPolicy: Always
@@ -11,6 +10,8 @@ useAggregator: true
 ##
 rbacEnable: true
 apiserver:
+  # annotations is a collection of annotations to add to the apiserver pods.
+  annotations: {}
   # PodPreset is an optional feature and can be enabled by uncommenting the line below
   # featureGates: "PodPreset=true"
   aggregator:
@@ -85,6 +86,8 @@ apiserver:
   # if true, makes the API server serve the OpenAPI schema (which is problematic with older versions of kubectl)
   serveOpenAPISpec: false
 controllerManager:
+  # annotations is a collection of annotations to add to the controllerManager pod.
+  annotations: {}
   # Log level; valid values are in the range 0 - 10
   verbosity: 10
   # Resync interval; format is a duration (`20m`, `1h`, etc)
@@ -109,8 +112,8 @@ controllerManager:
   # Whether the controller will expose metrics on /metrics
   enablePrometheusScrape: false
 # Whether the OriginatingIdentity alpha feature should be enabled
-originatingIdentityEnabled: true
+originatingIdentityEnabled: false
 # Whether the AsyncBindingOperations alpha feature should be enabled
-asyncBindingOperationsEnabled: true
+asyncBindingOperationsEnabled: false
 # Whether the NamespacedServiceBroker alpha feature should be enabled
-namespacedServiceBrokerEnabled: true
+namespacedServiceBrokerEnabled: false
