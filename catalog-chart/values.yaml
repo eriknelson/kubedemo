@@ -124,6 +124,6 @@ controllerManager:
 # Whether the OriginatingIdentity alpha feature should be enabled
 originatingIdentityEnabled: false
 # Whether the AsyncBindingOperations alpha feature should be enabled
-asyncBindingOperationsEnabled: false
+asyncBindingOperationsEnabled: true
 # Whether the NamespacedServiceBroker alpha feature should be enabled
-namespacedServiceBrokerEnabled: false
+namespacedServiceBrokerEnabled: true
